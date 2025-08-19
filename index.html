@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rumah Sahabat Qur'an - Laporan Santri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-emerald-50 to-teal-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg border-b-4 border-emerald-500">
+        <div class="container mx-auto px-4 py-6">
+            <div class="text-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-emerald-800 mb-2">🕌 Rumah Sahabat Qur'an</h1>
+                <p class="text-emerald-600 font-medium">Komplek Kehutanan Kampung Kalawi</p>
+                <p class="text-sm text-gray-600 mt-2">Laporan Kehadiran dan Pencapaian Tahfizh Santri</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-emerald-600 shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center space-x-1">
+                <button id="publicBtn"
+                    class="nav-btn active px-6 py-3 text-white font-medium transition-all duration-200 border-b-2 border-transparent hover:bg-emerald-700">
+                    📊 Laporan Publik
+                </button>
+                <button id="loginBtn"
+                    class="nav-btn px-6 py-3 text-white font-medium transition-all duration-200 border-b-2 border-transparent hover:bg-emerald-700">
+                    👨‍🏫 Login Guru
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Public Page -->
+        <div id="publicPage" class="page-content fade-in">
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">📋 Data Laporan Santri</h2>
+                        <div id="connectionStatus" class="flex items-center gap-2">
+                            <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                            <span class="text-sm text-green-600">✅ Data tersimpan lokal - Siap digunakan</span>
+                        </div>
+                        <div class="mt-2 text-xs text-gray-500">
+                            Total data: <span id="totalRecords">0</span> | Terakhir diperbarui: <span
+                                id="lastUpdated">-</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="syncBtn"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
+                            🔄 Sync GitHub
+                        </button>
+                        <button id="exportBtn"
+                            class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
+                            📥 Export JSON
+                        </button>
+                        <button id="importBtn"
+                            class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
+                            📤 Import JSON
+                        </button>
+                        <button id="refreshBtn"
+                            class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
+                            🔄 Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-green-800" id="totalSantri">0</div>
+                        <div class="text-sm text-green-600">Total Santri</div>
+                    </div>
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-blue-800" id="hadirToday">0</div>
+                        <div class="text-sm text-blue-600">Hadir Hari Ini</div>
+                    </div>
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-yellow-800" id="izinToday">0</div>
+                        <div class="text-sm text-yellow-600">Izin/Sakit Hari Ini</div>
+                    </div>
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-red-800" id="alphaToday">0</div>
+                        <div class="text-sm text-red-600">Alpha Hari Ini</div>
+                    </div>
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <h3 class="font-semibold text-gray-800 mb-3">🔍 Filter Data</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Dari</label>
+                            <input type="date" id="filterDateFrom"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Sampai</label>
+                            <input type="date" id="filterDateTo"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nama Santri</label>
+                            <input type="text" id="filterName" placeholder="Cari nama..."
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Status Kehadiran</label>
+                            <select id="filterAttendance"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                <option value="">Semua Status</option>
+                                <option value="Hadir">Hadir</option>
+                                <option value="Izin">Izin</option>
+                                <option value="Sakit">Sakit</option>
+                                <option value="Alpha">Alpha</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex gap-2">
+                        <button id="applyFilter"
+                            class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                            🔍 Terapkan Filter
+                        </button>
+                        <button id="clearFilter"
+                            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                            🗑️ Hapus Filter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Data Table -->
+                <div id="tableContainer" class="overflow-x-auto">
+                    <table class="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+                        <thead class="bg-emerald-50">
+                            <tr>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-100"
+                                    onclick="sortTable('date')">
+                                    Tanggal <span id="sortDate">↕️</span>
+                                </th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-100"
+                                    onclick="sortTable('name')">
+                                    Nama Santri <span id="sortName">↕️</span>
+                                </th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800">
+                                    Jenis Kelamin</th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-100"
+                                    onclick="sortTable('attendance')">
+                                    Kehadiran <span id="sortAttendance">↕️</span>
+                                </th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800">
+                                    Capaian Tahfizh</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTableBody">
+                            <!-- Data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- No Data State -->
+                <div id="noDataState" class="hidden text-center py-12">
+                    <div class="text-6xl mb-4">📚</div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Belum Ada Data</h3>
+                    <p class="text-gray-500 mb-4">Data laporan santri akan muncul di sini</p>
+                    <button onclick="showPage('login')"
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                        👨‍🏫 Login untuk Menambah Data
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Page -->
+        <div id="loginPage" class="page-content hidden">
+            <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8">
+                <div class="text-center mb-8">
+                    <div class="text-5xl mb-4">👨‍🏫</div>
+                    <h2 class="text-2xl font-bold text-gray-800">Login Guru</h2>
+                    <p class="text-gray-600 mt-2">Masuk untuk mengelola data santri</p>
+                </div>
+
+                <form id="loginForm" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Username</label>
+                        <input type="text" id="username"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                            placeholder="Masukkan username" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                        <input type="password" id="password"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                            placeholder="Masukkan password" required>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200">
+                        🔐 Masuk
+                    </button>
+                </form>
+
+                <div id="loginError"
+                    class="hidden mt-4 p-3 bg-red-100 border border-red-300 text-red-700 rounded-lg text-sm">
+                    Username atau password salah!
+                </div>
+
+                <!-- Demo Credentials Info -->
+                <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p class="text-sm text-blue-800 font-medium mb-2">🔑 Demo Credentials:</p>
+                    <p class="text-sm text-blue-700">Username: <code class="bg-blue-100 px-1 rounded">guru</code></p>
+                    <p class="text-sm text-blue-700">Password: <code
+                            class="bg-blue-100 px-1 rounded">rumahquran123</code></p>
+                </div>
+
+                <!-- GitHub Storage Info -->
+                <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <p class="text-sm text-green-800 font-medium mb-2">☁️ Penyimpanan GitHub:</p>
+                    <div class="text-sm text-green-700 space-y-1">
+                        <p>✅ <strong>Multi-device sync</strong> - Akses dari perangkat manapun</p>
+                        <p>✅ <strong>Cloud backup</strong> - Data aman di GitHub</p>
+                        <p>✅ <strong>Real-time sync</strong> - Update otomatis</p>
+                        <p>✅ <strong>Offline support</strong> - Tetap bisa digunakan tanpa internet</p>
+                    </div>
+                </div>
+
+                <!-- GitHub Setup Guide -->
+                <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p class="text-sm text-blue-800 font-medium mb-2">🔧 Setup GitHub Storage:</p>
+                    <ol class="text-sm text-blue-700 space-y-1 list-decimal list-inside">
+                        <li>Buat repository GitHub baru (public/private)</li>
+                        <li>Generate Personal Access Token di GitHub Settings</li>
+                        <li>Edit konfigurasi di kode: username, repo, token</li>
+                        <li>Deploy aplikasi ke GitHub Pages</li>
+                        <li>Data akan tersync otomatis antar perangkat</li>
+                    </ol>
+                    <button id="showGitHubSetup"
+                        class="mt-2 text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded">
+                        📖 Panduan Lengkap Setup GitHub
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboardPage" class="page-content hidden">
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 md:mb-0">🎯 Dashboard Guru</h2>
+                    <div class="flex gap-2">
+                        <button id="clearAllDataBtn"
+                            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                            🗑️ Hapus Semua Data
+                        </button>
+                        <button id="logoutBtn"
+                            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                            🚪 Logout
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Add New Record Form -->
+                <div class="bg-emerald-50 rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-emerald-800 mb-4">➕ Tambah Data Baru</h3>
+                    <form id="addRecordForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
+                            <input type="date" id="newDate"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nama Santri</label>
+                            <input type="text" id="newName"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                placeholder="Nama lengkap" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin</label>
+                            <select id="newGender"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                required>
+                                <option value="">Pilih...</option>
+                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Kehadiran</label>
+                            <select id="newAttendance"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                required>
+                                <option value="">Pilih...</option>
+                                <option value="Hadir">Hadir</option>
+                                <option value="Izin">Izin</option>
+                                <option value="Sakit">Sakit</option>
+                                <option value="Alpha">Alpha</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Capaian Tahfizh</label>
+                            <input type="text" id="newAchievement"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                placeholder="Contoh: Al-Fatihah 1-7" required>
+                        </div>
+                        <div class="md:col-span-2 lg:col-span-5">
+                            <button type="submit"
+                                class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200">
+                                ✅ Simpan Data
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Data Management Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">
+                                    Tanggal</th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">Nama
+                                    Santri</th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">Jenis
+                                    Kelamin</th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">
+                                    Kehadiran</th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">
+                                    Capaian Tahfizh</th>
+                                <th class="border border-gray-200 px-4 py-3 text-center font-semibold text-gray-800">
+                                    Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboardTableBody">
+                            <!-- Data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">✏️ Edit Data Santri</h3>
+            <form id="editForm" class="space-y-4">
+                <input type="hidden" id="editIndex">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
+                    <input type="date" id="editDate"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Santri</label>
+                    <input type="text" id="editName"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin</label>
+                    <select id="editGender"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                        required>
+                        <option value="Laki-laki">Laki-laki</option>
+                        <option value="Perempuan">Perempuan</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kehadiran</label>
+                    <select id="editAttendance"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                        required>
+                        <option value="Hadir">Hadir</option>
+                        <option value="Izin">Izin</option>
+                        <option value="Sakit">Sakit</option>
+                        <option value="Alpha">Alpha</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Capaian Tahfizh</label>
+                    <input type="text" id="editAchievement"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                        required>
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button type="submit"
+                        class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                        💾 Simpan
+                    </button>
+                    <button type="button" id="cancelEdit"
+                        class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                        ❌ Batal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div id="importModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">📤 Import Data JSON</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Pilih File JSON</label>
+                    <input type="file" id="importFile" accept=".json"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                </div>
+                <div class="text-sm text-gray-600">
+                    <p>⚠️ <strong>Perhatian:</strong> Import akan mengganti semua data yang ada!</p>
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button id="confirmImport"
+                        class="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                        📤 Import
+                    </button>
+                    <button id="cancelImport"
+                        class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                        ❌ Batal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GitHub Setup Modal -->
+    <div id="githubSetupModal"
+        class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800">☁️ Panduan Setup GitHub Storage</h3>
+                <button id="closeGitHubSetup" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Step 1 -->
+                <div class="border-l-4 border-blue-500 pl-4">
+                    <h4 class="font-semibold text-blue-800 mb-2">1️⃣ Buat Repository GitHub</h4>
+                    <p class="text-gray-700 mb-2">• Buka <a href="https://github.com/new" target="_blank"
+                            class="text-blue-600 underline">GitHub.com/new</a></p>
+                    <p class="text-gray-700 mb-2">• Nama repository: <code
+                            class="bg-gray-100 px-1 rounded">rumah-sahabat-quran-data</code></p>
+                    <p class="text-gray-700 mb-2">• Pilih <strong>Public</strong> atau <strong>Private</strong></p>
+                    <p class="text-gray-700">• Klik <strong>Create repository</strong></p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="border-l-4 border-green-500 pl-4">
+                    <h4 class="font-semibold text-green-800 mb-2">2️⃣ Generate Personal Access Token</h4>
+                    <p class="text-gray-700 mb-2">• Buka <a href="https://github.com/settings/tokens" target="_blank"
+                            class="text-blue-600 underline">GitHub Settings → Developer settings → Personal access
+                            tokens</a></p>
+                    <p class="text-gray-700 mb-2">• Klik <strong>Generate new token (classic)</strong></p>
+                    <p class="text-gray-700 mb-2">• Nama: <code
+                            class="bg-gray-100 px-1 rounded">Rumah Sahabat Quran App</code></p>
+                    <p class="text-gray-700 mb-2">• Pilih scope: <strong>repo</strong> (Full control of private
+                        repositories)</p>
+                    <p class="text-gray-700">• <strong>Copy token</strong> yang dihasilkan (simpan baik-baik!)</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="border-l-4 border-purple-500 pl-4">
+                    <h4 class="font-semibold text-purple-800 mb-2">3️⃣ Konfigurasi Aplikasi</h4>
+                    <p class="text-gray-700 mb-2">Edit bagian konfigurasi di kode aplikasi:</p>
+                    <div class="bg-gray-900 text-green-400 p-4 rounded text-xs overflow-x-auto">
+                        <pre>const GITHUB_CONFIG = {
+    owner: 'username_github_anda',           // Ganti dengan username GitHub
+    repo: 'rumah-sahabat-quran-data',       // Nama repository yang dibuat
+    token: 'ghp_xxxxxxxxxxxxxxxxxxxx',      // Token yang di-generate
+    dataFile: 'data/santri-data.json',     // Path file data
+    branch: 'main'                          // Branch utama
+};</pre>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="border-l-4 border-orange-500 pl-4">
+                    <h4 class="font-semibold text-orange-800 mb-2">4️⃣ Deploy ke GitHub Pages</h4>
+                    <p class="text-gray-700 mb-2">• Upload file HTML aplikasi ke repository</p>
+                    <p class="text-gray-700 mb-2">• Buka Settings repository → Pages</p>
+                    <p class="text-gray-700 mb-2">• Source: <strong>Deploy from a branch</strong></p>
+                    <p class="text-gray-700 mb-2">• Branch: <strong>main</strong>, Folder: <strong>/ (root)</strong></p>
+                    <p class="text-gray-700">• Akses via: <code
+                            class="bg-gray-100 px-1 rounded">https://username.github.io/repo-name</code></p>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="border-l-4 border-red-500 pl-4">
+                    <h4 class="font-semibold text-red-800 mb-2">5️⃣ Test Multi-Device Sync</h4>
+                    <p class="text-gray-700 mb-2">• Buka aplikasi di perangkat pertama</p>
+                    <p class="text-gray-700 mb-2">• Login dan tambah data santri</p>
+                    <p class="text-gray-700 mb-2">• Buka aplikasi di perangkat kedua</p>
+                    <p class="text-gray-700 mb-2">• Klik <strong>Sync GitHub</strong></p>
+                    <p class="text-gray-700">• Data akan tersinkronisasi otomatis!</p>
+                </div>
+
+                <!-- Security Note -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-yellow-800 mb-2">🔒 Keamanan Token</h4>
+                    <div class="text-sm text-yellow-700 space-y-1">
+                        <p>⚠️ <strong>Jangan share token</strong> ke orang lain</p>
+                        <p>⚠️ <strong>Jangan commit token</strong> ke repository public</p>
+                        <p>✅ <strong>Gunakan repository private</strong> untuk keamanan maksimal</p>
+                        <p>✅ <strong>Regenerate token</strong> jika terkompromis</p>
+                    </div>
+                </div>
+
+                <!-- Benefits -->
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-green-800 mb-2">🚀 Keunggulan GitHub Storage</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-green-700">
+                        <div>
+                            <p>✅ <strong>Multi-device sync</strong> - Akses dari HP, laptop, tablet</p>
+                            <p>✅ <strong>Cloud backup</strong> - Data aman di cloud GitHub</p>
+                            <p>✅ <strong>Version control</strong> - History perubahan data</p>
+                        </div>
+                        <div>
+                            <p>✅ <strong>Offline support</strong> - Tetap bisa digunakan tanpa internet</p>
+                            <p>✅ <strong>Real-time sync</strong> - Update otomatis antar perangkat</p>
+                            <p>✅ <strong>Free hosting</strong> - GitHub Pages gratis selamanya</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="messageContainer" class="fixed top-4 right-4 z-50"></div>
+
+    <script>
+        // GITHUB STORAGE CONFIGURATION
+        const GITHUB_CONFIG = {
+            owner: 'YOUR_GITHUB_USERNAME',        // Ganti dengan username GitHub Anda
+            repo: 'rumah-sahabat-quran-data',    // Nama repository untuk data
+            token: 'YOUR_GITHUB_TOKEN',          // Personal Access Token GitHub
+            dataFile: 'data/santri-data.json',  // Path file data di repository
+            branch: 'main'                       // Branch yang digunakan
+        };
+
+        // Login credentials
+        const LOGIN_CREDENTIALS = {
+            username: 'guru',
+            password: 'rumahquran123'
+        };
+
+        // Current user state
+        let isLoggedIn = false;
+        let currentData = [];
+        let filteredData = [];
+        let currentSort = { field: 'date', direction: 'desc' };
+        let isOnline = navigator.onLine;
+        let lastSyncTime = null;
+
+        // Sample data untuk inisialisasi pertama kali
+        const initialSampleData = [
+            {
+                id: generateId(),
+                date: '2024-01-15',
+                name: 'Ahmad Fauzi',
+                gender: 'Laki-laki',
+                attendance: 'Hadir',
+                achievement: 'Al-Fatihah 1-7',
+                timestamp: new Date().toISOString()
+            },
+            {
+                id: generateId(),
+                date: '2024-01-15',
+                name: 'Siti Aisyah',
+                gender: 'Perempuan',
+                attendance: 'Hadir',
+                achievement: 'Al-Baqarah 1-10',
+                timestamp: new Date().toISOString()
+            },
+            {
+                id: generateId(),
+                date: '2024-01-16',
+                name: 'Muhammad Rizki',
+                gender: 'Laki-laki',
+                attendance: 'Izin',
+                achievement: 'Al-Fatihah 1-7',
+                timestamp: new Date().toISOString()
+            }
+        ];
+
+        // DOM Elements
+        const publicBtn = document.getElementById('publicBtn');
+        const loginBtn = document.getElementById('loginBtn');
+        const publicPage = document.getElementById('publicPage');
+        const loginPage = document.getElementById('loginPage');
+        const dashboardPage = document.getElementById('dashboardPage');
+        const loginForm = document.getElementById('loginForm');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const addRecordForm = document.getElementById('addRecordForm');
+        const editModal = document.getElementById('editModal');
+        const editForm = document.getElementById('editForm');
+        const cancelEdit = document.getElementById('cancelEdit');
+        const importModal = document.getElementById('importModal');
+
+        // Generate unique ID
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        // GitHub API Functions
+        async function saveDataToGitHub() {
+            if (!isOnline) {
+                // Save to localStorage as backup when offline
+                localStorage.setItem('backup_data', JSON.stringify(currentData));
+                showMessage('📱 Offline: Data disimpan lokal, akan sync saat online', 'warning');
+                return false;
+            }
+
+            try {
+                showMessage('☁️ Menyimpan ke GitHub...', 'info');
+
+                const dataToSave = {
+                    metadata: {
+                        lastUpdated: new Date().toISOString(),
+                        totalRecords: currentData.length,
+                        version: '1.0'
+                    },
+                    data: currentData
+                };
+
+                // Get current file SHA (required for updates)
+                let fileSha = null;
+                try {
+                    const getResponse = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}`, {
+                        headers: {
+                            'Authorization': `token ${GITHUB_CONFIG.token}`,
+                            'Accept': 'application/vnd.github.v3+json'
+                        }
+                    });
+
+                    if (getResponse.ok) {
+                        const fileData = await getResponse.json();
+                        fileSha = fileData.sha;
+                    }
+                } catch (e) {
+                    console.log('File tidak ada, akan dibuat baru');
+                }
+
+                // Save to GitHub
+                const content = btoa(unescape(encodeURIComponent(JSON.stringify(dataToSave, null, 2))));
+
+                const savePayload = {
+                    message: `Update data santri - ${new Date().toLocaleString('id-ID')}`,
+                    content: content,
+                    branch: GITHUB_CONFIG.branch
+                };
+
+                if (fileSha) {
+                    savePayload.sha = fileSha;
+                }
+
+                const saveResponse = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${GITHUB_CONFIG.token}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(savePayload)
+                });
+
+                if (saveResponse.ok) {
+                    lastSyncTime = new Date().toISOString();
+                    localStorage.setItem('last_sync', lastSyncTime);
+                    updateStorageInfo();
+                    showMessage('✅ Data berhasil disimpan ke GitHub!', 'success');
+                    return true;
+                } else {
+                    const errorData = await saveResponse.json();
+                    throw new Error(errorData.message || 'GitHub API Error');
+                }
+
+            } catch (error) {
+                console.error('Error saving to GitHub:', error);
+                // Fallback to localStorage
+                localStorage.setItem('backup_data', JSON.stringify(currentData));
+                showMessage('❌ Gagal simpan ke GitHub: ' + error.message + '. Data disimpan lokal.', 'error');
+                return false;
+            }
+        }
+
+        async function loadDataFromGitHub() {
+            try {
+                showMessage('☁️ Memuat data dari GitHub...', 'info');
+
+                const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}`, {
+                    headers: {
+                        'Authorization': `token ${GITHUB_CONFIG.token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+
+                if (response.ok) {
+                    const fileData = await response.json();
+                    const content = decodeURIComponent(escape(atob(fileData.content)));
+                    const parsedData = JSON.parse(content);
+
+                    if (parsedData.data && Array.isArray(parsedData.data)) {
+                        currentData = parsedData.data.map(record => ({
+                            ...record,
+                            id: record.id || generateId()
+                        }));
+
+                        lastSyncTime = parsedData.metadata?.lastUpdated || new Date().toISOString();
+                        localStorage.setItem('last_sync', lastSyncTime);
+                        updateStorageInfo();
+                        showMessage('✅ Data berhasil dimuat dari GitHub!', 'success');
+                        return true;
+                    }
+                } else if (response.status === 404) {
+                    // File tidak ada, buat dengan data sample
+                    console.log('File data tidak ditemukan, membuat data baru');
+                    currentData = [...initialSampleData];
+                    await saveDataToGitHub();
+                    return true;
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+            } catch (error) {
+                console.error('Error loading from GitHub:', error);
+
+                // Fallback ke localStorage backup
+                const backupData = localStorage.getItem('backup_data');
+                if (backupData) {
+                    currentData = JSON.parse(backupData);
+                    showMessage('📱 Menggunakan data backup lokal', 'warning');
+                } else {
+                    currentData = [...initialSampleData];
+                    showMessage('🔧 Menggunakan data sample', 'info');
+                }
+
+                updateStorageInfo();
+                return false;
+            }
+        }
+
+        function updateStorageInfo() {
+            document.getElementById('totalRecords').textContent = currentData.length;
+
+            const syncTime = localStorage.getItem('last_sync') || lastSyncTime;
+            document.getElementById('lastUpdated').textContent = syncTime ?
+                new Date(syncTime).toLocaleString('id-ID') : 'Belum pernah sync';
+
+            // Update connection status
+            const statusElement = document.getElementById('connectionStatus');
+            if (statusElement) {
+                const dot = statusElement.querySelector('span:first-child');
+                const text = statusElement.querySelector('span:last-child');
+
+                if (isOnline && GITHUB_CONFIG.token !== 'YOUR_GITHUB_TOKEN') {
+                    dot.className = 'w-3 h-3 bg-green-500 rounded-full';
+                    text.textContent = '☁️ Terhubung ke GitHub - Multi-device sync';
+                    text.className = 'text-sm text-green-600';
+                } else if (!isOnline) {
+                    dot.className = 'w-3 h-3 bg-yellow-500 rounded-full animate-pulse';
+                    text.textContent = '📱 Mode Offline - Data lokal';
+                    text.className = 'text-sm text-yellow-600';
+                } else {
+                    dot.className = 'w-3 h-3 bg-blue-500 rounded-full';
+                    text.textContent = '🔧 Setup GitHub diperlukan';
+                    text.className = 'text-sm text-blue-600';
+                }
+            }
+        }
+
+        // Export/Import Functions
+        function exportDataAsJSON() {
+            try {
+                const exportData = {
+                    metadata: {
+                        exportDate: new Date().toISOString(),
+                        totalRecords: currentData.length,
+                        source: 'Rumah Sahabat Quran - Laporan Santri'
+                    },
+                    data: currentData
+                };
+
+                const dataStr = JSON.stringify(exportData, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(dataBlob);
+                link.download = `data-santri-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+
+                showMessage('✅ Data berhasil di-export!', 'success');
+            } catch (error) {
+                console.error('Export error:', error);
+                showMessage('Gagal export data', 'error');
+            }
+        }
+
+        function importDataFromJSON(file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+
+                    // Validate structure
+                    let dataToImport = [];
+                    if (importedData.data && Array.isArray(importedData.data)) {
+                        dataToImport = importedData.data;
+                    } else if (Array.isArray(importedData)) {
+                        dataToImport = importedData;
+                    } else {
+                        throw new Error('Format file tidak valid');
+                    }
+
+                    // Validate each record
+                    const validatedData = dataToImport.map(record => ({
+                        id: record.id || generateId(),
+                        date: record.date || '',
+                        name: record.name || '',
+                        gender: record.gender || '',
+                        attendance: record.attendance || '',
+                        achievement: record.achievement || '',
+                        timestamp: record.timestamp || new Date().toISOString()
+                    }));
+
+                    // Replace current data
+                    currentData = validatedData;
+                    saveDataToStorage();
+
+                    // Refresh displays
+                    loadPublicData();
+                    if (isLoggedIn) {
+                        loadDashboardData();
+                    }
+
+                    importModal.classList.add('hidden');
+                    showMessage(`✅ Berhasil import ${validatedData.length} data!`, 'success');
+
+                } catch (error) {
+                    console.error('Import error:', error);
+                    showMessage('Gagal import data: ' + error.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Navigation
+        function showPage(page) {
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active', 'border-white'));
+
+            if (page === 'public') {
+                publicPage.classList.remove('hidden');
+                publicBtn.classList.add('active', 'border-white');
+                loadPublicData();
+            } else if (page === 'login') {
+                loginPage.classList.remove('hidden');
+                loginBtn.classList.add('active', 'border-white');
+            } else if (page === 'dashboard') {
+                dashboardPage.classList.remove('hidden');
+                loginBtn.classList.add('active', 'border-white');
+                loadDashboardData();
+            }
+        }
+
+        // Statistics Functions
+        function calculateStatistics() {
+            const today = new Date().toISOString().split('T')[0];
+            const todayData = currentData.filter(record => record.date === today);
+
+            const uniqueSantri = [...new Set(currentData.map(record => record.name))];
+            const hadirToday = todayData.filter(record => record.attendance === 'Hadir').length;
+            const izinToday = todayData.filter(record => ['Izin', 'Sakit'].includes(record.attendance)).length;
+            const alphaToday = todayData.filter(record => record.attendance === 'Alpha').length;
+
+            document.getElementById('totalSantri').textContent = uniqueSantri.length;
+            document.getElementById('hadirToday').textContent = hadirToday;
+            document.getElementById('izinToday').textContent = izinToday;
+            document.getElementById('alphaToday').textContent = alphaToday;
+        }
+
+        // Filter Functions
+        function applyFilters() {
+            const dateFrom = document.getElementById('filterDateFrom').value;
+            const dateTo = document.getElementById('filterDateTo').value;
+            const nameFilter = document.getElementById('filterName').value.toLowerCase();
+            const attendanceFilter = document.getElementById('filterAttendance').value;
+
+            filteredData = currentData.filter(record => {
+                let match = true;
+
+                if (dateFrom && record.date < dateFrom) match = false;
+                if (dateTo && record.date > dateTo) match = false;
+                if (nameFilter && !record.name.toLowerCase().includes(nameFilter)) match = false;
+                if (attendanceFilter && record.attendance !== attendanceFilter) match = false;
+
+                return match;
+            });
+
+            displayTableData(filteredData);
+            showMessage(`Filter diterapkan: ${filteredData.length} dari ${currentData.length} data`, 'info');
+        }
+
+        function clearFilters() {
+            document.getElementById('filterDateFrom').value = '';
+            document.getElementById('filterDateTo').value = '';
+            document.getElementById('filterName').value = '';
+            document.getElementById('filterAttendance').value = '';
+
+            filteredData = [...currentData];
+            displayTableData(filteredData);
+            showMessage('Filter dihapus', 'info');
+        }
+
+        // Sort Functions
+        function sortTable(field) {
+            if (currentSort.field === field) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.field = field;
+                currentSort.direction = 'asc';
+            }
+
+            const dataToSort = filteredData.length > 0 ? filteredData : currentData;
+            const sortedData = [...dataToSort].sort((a, b) => {
+                let aVal = a[field];
+                let bVal = b[field];
+
+                if (field === 'date') {
+                    aVal = new Date(aVal);
+                    bVal = new Date(bVal);
+                }
+
+                if (aVal < bVal) return currentSort.direction === 'asc' ? -1 : 1;
+                if (aVal > bVal) return currentSort.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            // Update sort indicators
+            document.querySelectorAll('[id^="sort"]').forEach(el => el.textContent = '↕️');
+            const sortIndicator = document.getElementById(`sort${field.charAt(0).toUpperCase() + field.slice(1)}`);
+            if (sortIndicator) {
+                sortIndicator.textContent = currentSort.direction === 'asc' ? '↑' : '↓';
+            }
+
+            displayTableData(sortedData);
+        }
+
+        // Display Functions
+        function displayTableData(data) {
+            const tableBody = document.getElementById('dataTableBody');
+            const tableContainer = document.getElementById('tableContainer');
+            const noDataState = document.getElementById('noDataState');
+
+            if (data.length === 0) {
+                tableContainer.classList.add('hidden');
+                noDataState.classList.remove('hidden');
+                return;
+            }
+
+            tableContainer.classList.remove('hidden');
+            noDataState.classList.add('hidden');
+
+            tableBody.innerHTML = data.map(record => `
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="border border-gray-200 px-4 py-3">${formatDate(record.date)}</td>
+                    <td class="border border-gray-200 px-4 py-3 font-medium">${record.name}</td>
+                    <td class="border border-gray-200 px-4 py-3">${record.gender}</td>
+                    <td class="border border-gray-200 px-4 py-3">
+                        <span class="px-2 py-1 rounded-full text-xs font-medium ${getAttendanceColor(record.attendance)}">
+                            ${record.attendance}
+                        </span>
+                    </td>
+                    <td class="border border-gray-200 px-4 py-3">${record.achievement}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Load public data
+        function loadPublicData() {
+            filteredData = [...currentData];
+            displayTableData(filteredData);
+            calculateStatistics();
+            updateStorageInfo();
+        }
+
+        // Load dashboard data
+        function loadDashboardData() {
+            const tableBody = document.getElementById('dashboardTableBody');
+            const sortedData = [...currentData].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            tableBody.innerHTML = sortedData.map((record, index) => `
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="border border-gray-200 px-4 py-3">${formatDate(record.date)}</td>
+                    <td class="border border-gray-200 px-4 py-3 font-medium">${record.name}</td>
+                    <td class="border border-gray-200 px-4 py-3">${record.gender}</td>
+                    <td class="border border-gray-200 px-4 py-3">
+                        <span class="px-2 py-1 rounded-full text-xs font-medium ${getAttendanceColor(record.attendance)}">
+                            ${record.attendance}
+                        </span>
+                    </td>
+                    <td class="border border-gray-200 px-4 py-3">${record.achievement}</td>
+                    <td class="border border-gray-200 px-4 py-3 text-center">
+                        <button onclick="editRecord('${record.id}')" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm mr-2 transition-colors">
+                            ✏️ Edit
+                        </button>
+                        <button onclick="deleteRecord('${record.id}')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors">
+                            🗑️ Hapus
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Utility functions
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('id-ID', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function getAttendanceColor(attendance) {
+            switch (attendance) {
+                case 'Hadir': return 'bg-green-100 text-green-800';
+                case 'Izin': return 'bg-yellow-100 text-yellow-800';
+                case 'Sakit': return 'bg-blue-100 text-blue-800';
+                case 'Alpha': return 'bg-red-100 text-red-800';
+                default: return 'bg-gray-100 text-gray-800';
+            }
+        }
+
+        function showMessage(message, type = 'success') {
+            const messageContainer = document.getElementById('messageContainer');
+            const messageDiv = document.createElement('div');
+
+            let bgColor = 'bg-green-500';
+            if (type === 'error') bgColor = 'bg-red-500';
+            if (type === 'info') bgColor = 'bg-blue-500';
+            if (type === 'warning') bgColor = 'bg-yellow-500';
+
+            messageDiv.className = `p-4 rounded-lg shadow-lg mb-4 ${bgColor} text-white slide-in`;
+            messageDiv.textContent = message;
+
+            messageContainer.appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 4000);
+        }
+
+        // CRUD Operations dengan GitHub Sync
+        async function addRecord(recordData) {
+            const newRecord = {
+                id: generateId(),
+                ...recordData,
+                timestamp: new Date().toISOString()
+            };
+
+            currentData.push(newRecord);
+
+            const success = await saveDataToGitHub();
+            if (success || !isOnline) {
+                showMessage('✅ Data berhasil ditambahkan!');
+                loadDashboardData();
+                loadPublicData();
+            }
+        }
+
+        function editRecord(recordId) {
+            const record = currentData.find(r => r.id === recordId);
+            if (!record) return;
+
+            document.getElementById('editIndex').value = recordId;
+            document.getElementById('editDate').value = record.date;
+            document.getElementById('editName').value = record.name;
+            document.getElementById('editGender').value = record.gender;
+            document.getElementById('editAttendance').value = record.attendance;
+            document.getElementById('editAchievement').value = record.achievement;
+
+            editModal.classList.remove('hidden');
+        }
+
+        async function updateRecord(recordId, recordData) {
+            const index = currentData.findIndex(r => r.id === recordId);
+            if (index === -1) return;
+
+            currentData[index] = {
+                ...currentData[index],
+                ...recordData,
+                timestamp: new Date().toISOString()
+            };
+
+            const success = await saveDataToGitHub();
+            if (success || !isOnline) {
+                showMessage('✅ Data berhasil diperbarui!');
+                loadDashboardData();
+                loadPublicData();
+                editModal.classList.add('hidden');
+            }
+        }
+
+        async function deleteRecord(recordId) {
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                const index = currentData.findIndex(r => r.id === recordId);
+                if (index === -1) return;
+
+                currentData.splice(index, 1);
+
+                const success = await saveDataToGitHub();
+                if (success || !isOnline) {
+                    showMessage('✅ Data berhasil dihapus!');
+                    loadDashboardData();
+                    loadPublicData();
+                }
+            }
+        }
+
+        async function clearAllData() {
+            if (confirm('⚠️ PERINGATAN: Ini akan menghapus SEMUA data santri!\n\nApakah Anda yakin ingin melanjutkan?')) {
+                if (confirm('Konfirmasi sekali lagi: Hapus semua data?')) {
+                    currentData = [];
+                    const success = await saveDataToGitHub();
+                    if (success || !isOnline) {
+                        showMessage('🗑️ Semua data berhasil dihapus!', 'warning');
+                        loadDashboardData();
+                        loadPublicData();
+                    }
+                }
+            }
+        }
+
+        // Sync Functions
+        async function syncWithGitHub() {
+            if (!isOnline) {
+                showMessage('📱 Tidak ada koneksi internet', 'warning');
+                return;
+            }
+
+            try {
+                showMessage('🔄 Sinkronisasi dengan GitHub...', 'info');
+                await loadDataFromGitHub();
+                loadPublicData();
+                if (isLoggedIn) {
+                    loadDashboardData();
+                }
+            } catch (error) {
+                showMessage('❌ Gagal sinkronisasi: ' + error.message, 'error');
+            }
+        }
+
+        // Network status monitoring
+        function handleOnlineStatus() {
+            isOnline = navigator.onLine;
+            updateStorageInfo();
+
+            if (isOnline) {
+                showMessage('🌐 Kembali online! Sinkronisasi otomatis...', 'info');
+                syncWithGitHub();
+            } else {
+                showMessage('📱 Mode offline - Data akan disimpan lokal', 'warning');
+            }
+        }
+
+        // Event Listeners
+        publicBtn.addEventListener('click', () => showPage('public'));
+        loginBtn.addEventListener('click', () => {
+            if (isLoggedIn) {
+                showPage('dashboard');
+            } else {
+                showPage('login');
+            }
+        });
+
+        refreshBtn.addEventListener('click', () => {
+            loadPublicData();
+            showMessage('🔄 Data berhasil diperbarui!');
+        });
+
+        document.getElementById('syncBtn').addEventListener('click', syncWithGitHub);
+
+        document.getElementById('exportBtn').addEventListener('click', exportDataAsJSON);
+
+        document.getElementById('importBtn').addEventListener('click', () => {
+            importModal.classList.remove('hidden');
+        });
+
+        document.getElementById('confirmImport').addEventListener('click', () => {
+            const fileInput = document.getElementById('importFile');
+            if (fileInput.files.length > 0) {
+                importDataFromJSON(fileInput.files[0]);
+            } else {
+                showMessage('Pilih file JSON terlebih dahulu', 'warning');
+            }
+        });
+
+        document.getElementById('cancelImport').addEventListener('click', () => {
+            importModal.classList.add('hidden');
+            document.getElementById('importFile').value = '';
+        });
+
+        document.getElementById('applyFilter').addEventListener('click', applyFilters);
+        document.getElementById('clearFilter').addEventListener('click', clearFilters);
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginError = document.getElementById('loginError');
+
+            if (username === LOGIN_CREDENTIALS.username && password === LOGIN_CREDENTIALS.password) {
+                isLoggedIn = true;
+                loginBtn.textContent = '🎯 Dashboard';
+                loginError.classList.add('hidden');
+                showMessage('✅ Login berhasil! Selamat datang, Guru.');
+                showPage('dashboard');
+            } else {
+                loginError.classList.remove('hidden');
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            isLoggedIn = false;
+            loginBtn.textContent = '👨‍🏫 Login Guru';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            showMessage('🚪 Logout berhasil!');
+            showPage('public');
+        });
+
+        document.getElementById('clearAllDataBtn').addEventListener('click', clearAllData);
+
+        addRecordForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const recordData = {
+                date: document.getElementById('newDate').value,
+                name: document.getElementById('newName').value,
+                gender: document.getElementById('newGender').value,
+                attendance: document.getElementById('newAttendance').value,
+                achievement: document.getElementById('newAchievement').value
+            };
+
+            addRecord(recordData);
+            addRecordForm.reset();
+            // Set today's date again
+            document.getElementById('newDate').value = new Date().toISOString().split('T')[0];
+        });
+
+        editForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const recordId = document.getElementById('editIndex').value;
+            const recordData = {
+                date: document.getElementById('editDate').value,
+                name: document.getElementById('editName').value,
+                gender: document.getElementById('editGender').value,
+                attendance: document.getElementById('editAttendance').value,
+                achievement: document.getElementById('editAchievement').value
+            };
+
+            updateRecord(recordId, recordData);
+        });
+
+        cancelEdit.addEventListener('click', () => {
+            editModal.classList.add('hidden');
+        });
+
+        // GitHub Setup Modal
+        document.getElementById('showGitHubSetup').addEventListener('click', () => {
+            document.getElementById('githubSetupModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeGitHubSetup').addEventListener('click', () => {
+            document.getElementById('githubSetupModal').classList.add('hidden');
+        });
+
+        // Network status listeners
+        window.addEventListener('online', handleOnlineStatus);
+        window.addEventListener('offline', handleOnlineStatus);
+
+        // Close modals when clicking outside
+        editModal.addEventListener('click', (e) => {
+            if (e.target === editModal) {
+                editModal.classList.add('hidden');
+            }
+        });
+
+        importModal.addEventListener('click', (e) => {
+            if (e.target === importModal) {
+                importModal.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('githubSetupModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('githubSetupModal')) {
+                document.getElementById('githubSetupModal').classList.add('hidden');
+            }
+        });
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check network status
+            isOnline = navigator.onLine;
+
+            // Load data from GitHub or fallback to local
+            if (isOnline && GITHUB_CONFIG.token !== 'YOUR_GITHUB_TOKEN') {
+                await loadDataFromGitHub();
+            } else {
+                // Fallback to localStorage or sample data
+                const backupData = localStorage.getItem('backup_data');
+                if (backupData) {
+                    currentData = JSON.parse(backupData);
+                    showMessage('📱 Menggunakan data backup lokal', 'info');
+                } else {
+                    currentData = [...initialSampleData];
+                    showMessage('🔧 Menggunakan data sample - Setup GitHub untuk sync multi-device', 'info');
+                }
+            }
+
+            showPage('public');
+            updateStorageInfo();
+
+            // Set today's date as default
+            document.getElementById('newDate').value = new Date().toISOString().split('T')[0];
+
+            // Show appropriate welcome message
+            if (GITHUB_CONFIG.token === 'YOUR_GITHUB_TOKEN') {
+                showMessage('🔧 Setup GitHub untuk sync multi-device!', 'info');
+            } else if (isOnline) {
+                showMessage('☁️ Aplikasi siap dengan GitHub sync!', 'success');
+            } else {
+                showMessage('📱 Mode offline - Data tersimpan lokal', 'warning');
+            }
+        });
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9716d60f30e6fd97',t:'MTc1NTU3Njk5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
