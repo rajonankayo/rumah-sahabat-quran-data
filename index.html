@@ -667,7 +667,7 @@
             }
 
             // Validasi konfigurasi GitHub
-            if (!GITHUB_CONFIG.token || GITHUB_CONFIG.token === 'YOUR_GITHUB_TOKEN' || GITHUB_CONFIG.token.length < 20) {
+            if (!GITHUB_CONFIG.token || GITHUB_CONFIG.token === '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' || GITHUB_CONFIG.token.length < 20) {
                 localStorage.setItem('backup_data', JSON.stringify(currentData));
                 showMessage('🔧 Token GitHub tidak valid. Setup GitHub diperlukan. Data disimpan lokal.', 'warning');
                 return false;
@@ -840,7 +840,7 @@
                 const dot = statusElement.querySelector('span:first-child');
                 const text = statusElement.querySelector('span:last-child');
 
-                if (isOnline && GITHUB_CONFIG.token !== 'YOUR_GITHUB_TOKEN') {
+                if (isOnline && GITHUB_CONFIG.token !== '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') {
                     dot.className = 'w-3 h-3 bg-green-500 rounded-full';
                     text.textContent = '☁️ Terhubung ke GitHub - Multi-device sync';
                     text.className = 'text-sm text-green-600';
@@ -1413,7 +1413,7 @@
             document.getElementById('newDate').value = new Date().toISOString().split('T')[0];
 
             // Show appropriate welcome message
-            if (GITHUB_CONFIG.token === 'YOUR_GITHUB_TOKEN') {
+            if (GITHUB_CONFIG.token === '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') {
                 showMessage('🔧 Setup GitHub untuk sync multi-device!', 'info');
             } else if (isOnline) {
                 showMessage('☁️ Aplikasi siap dengan GitHub sync!', 'success');
