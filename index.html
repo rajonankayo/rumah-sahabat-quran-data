@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,43 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .slide-in {
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(-100%);
-            }
-
-            to {
-                transform: translateX(0);
-            }
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-in { animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
     </style>
 </head>
-
 <body class="bg-gradient-to-br from-emerald-50 to-teal-100 min-h-screen">
     <!-- Header -->
     <header class="bg-white shadow-lg border-b-4 border-emerald-500">
@@ -61,12 +30,10 @@
     <nav class="bg-emerald-600 shadow-md">
         <div class="container mx-auto px-4">
             <div class="flex justify-center space-x-1">
-                <button id="publicBtn"
-                    class="nav-btn active px-6 py-3 text-white font-medium transition-all duration-200 border-b-2 border-transparent hover:bg-emerald-700">
+                <button id="publicBtn" class="nav-btn active px-6 py-3 text-white font-medium transition-all duration-200 border-b-2 border-transparent hover:bg-emerald-700">
                     📊 Laporan Publik
                 </button>
-                <button id="loginBtn"
-                    class="nav-btn px-6 py-3 text-white font-medium transition-all duration-200 border-b-2 border-transparent hover:bg-emerald-700">
+                <button id="loginBtn" class="nav-btn px-6 py-3 text-white font-medium transition-all duration-200 border-b-2 border-transparent hover:bg-emerald-700">
                     👨‍🏫 Login Guru
                 </button>
             </div>
@@ -86,30 +53,25 @@
                             <span class="text-sm text-green-600">✅ Data tersimpan lokal - Siap digunakan</span>
                         </div>
                         <div class="mt-2 text-xs text-gray-500">
-                            Total data: <span id="totalRecords">0</span> | Terakhir diperbarui: <span
-                                id="lastUpdated">-</span>
+                            Total data: <span id="totalRecords">0</span> | Terakhir diperbarui: <span id="lastUpdated">-</span>
                         </div>
                     </div>
                     <div class="flex gap-2">
-                        <button id="syncBtn"
-                            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
+                        <button id="syncBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
                             🔄 Sync GitHub
                         </button>
-                        <button id="exportBtn"
-                            class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
+                        <button id="exportBtn" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
                             📥 Export JSON
                         </button>
-                        <button id="importBtn"
-                            class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
+                        <button id="importBtn" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
                             📤 Import JSON
                         </button>
-                        <button id="refreshBtn"
-                            class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
+                        <button id="refreshBtn" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2">
                             🔄 Refresh
                         </button>
                     </div>
                 </div>
-
+                
                 <!-- Statistics Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                     <div class="bg-green-50 border border-green-200 rounded-lg p-4">
@@ -136,23 +98,19 @@
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Dari</label>
-                            <input type="date" id="filterDateFrom"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <input type="date" id="filterDateFrom" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Sampai</label>
-                            <input type="date" id="filterDateTo"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <input type="date" id="filterDateTo" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Nama Santri</label>
-                            <input type="text" id="filterName" placeholder="Cari nama..."
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <input type="text" id="filterName" placeholder="Cari nama..." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Status Kehadiran</label>
-                            <select id="filterAttendance"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <select id="filterAttendance" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                                 <option value="">Semua Status</option>
                                 <option value="Hadir">Hadir</option>
                                 <option value="Izin">Izin</option>
@@ -162,12 +120,10 @@
                         </div>
                     </div>
                     <div class="mt-4 flex gap-2">
-                        <button id="applyFilter"
-                            class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                        <button id="applyFilter" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
                             🔍 Terapkan Filter
                         </button>
-                        <button id="clearFilter"
-                            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                        <button id="clearFilter" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
                             🗑️ Hapus Filter
                         </button>
                     </div>
@@ -178,22 +134,17 @@
                     <table class="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
                         <thead class="bg-emerald-50">
                             <tr>
-                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-100"
-                                    onclick="sortTable('date')">
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-100" onclick="sortTable('date')">
                                     Tanggal <span id="sortDate">↕️</span>
                                 </th>
-                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-100"
-                                    onclick="sortTable('name')">
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-100" onclick="sortTable('name')">
                                     Nama Santri <span id="sortName">↕️</span>
                                 </th>
-                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800">
-                                    Jenis Kelamin</th>
-                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-100"
-                                    onclick="sortTable('attendance')">
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800">Jenis Kelamin</th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-100" onclick="sortTable('attendance')">
                                     Kehadiran <span id="sortAttendance">↕️</span>
                                 </th>
-                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800">
-                                    Capaian Tahfizh</th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-emerald-800">Capaian Tahfizh</th>
                             </tr>
                         </thead>
                         <tbody id="dataTableBody">
@@ -207,8 +158,7 @@
                     <div class="text-6xl mb-4">📚</div>
                     <h3 class="text-xl font-semibold text-gray-700 mb-2">Belum Ada Data</h3>
                     <p class="text-gray-500 mb-4">Data laporan santri akan muncul di sini</p>
-                    <button onclick="showPage('login')"
-                        class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                    <button onclick="showPage('login')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
                         👨‍🏫 Login untuk Menambah Data
                     </button>
                 </div>
@@ -227,26 +177,20 @@
                 <form id="loginForm" class="space-y-6">
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Username</label>
-                        <input type="text" id="username"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-                            placeholder="Masukkan username" required>
+                        <input type="text" id="username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors" placeholder="Masukkan username" required>
                     </div>
-
+                    
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
-                        <input type="password" id="password"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-                            placeholder="Masukkan password" required>
+                        <input type="password" id="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors" placeholder="Masukkan password" required>
                     </div>
 
-                    <button type="submit"
-                        class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200">
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200">
                         🔐 Masuk
                     </button>
                 </form>
 
-                <div id="loginError"
-                    class="hidden mt-4 p-3 bg-red-100 border border-red-300 text-red-700 rounded-lg text-sm">
+                <div id="loginError" class="hidden mt-4 p-3 bg-red-100 border border-red-300 text-red-700 rounded-lg text-sm">
                     Username atau password salah!
                 </div>
 
@@ -254,8 +198,7 @@
                 <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                     <p class="text-sm text-blue-800 font-medium mb-2">🔑 Demo Credentials:</p>
                     <p class="text-sm text-blue-700">Username: <code class="bg-blue-100 px-1 rounded">guru</code></p>
-                    <p class="text-sm text-blue-700">Password: <code
-                            class="bg-blue-100 px-1 rounded">rumahquran123</code></p>
+                    <p class="text-sm text-blue-700">Password: <code class="bg-blue-100 px-1 rounded">rumahquran123</code></p>
                 </div>
 
                 <!-- GitHub Storage Info -->
@@ -279,10 +222,14 @@
                         <li>Deploy aplikasi ke GitHub Pages</li>
                         <li>Data akan tersync otomatis antar perangkat</li>
                     </ol>
-                    <button id="showGitHubSetup"
-                        class="mt-2 text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded">
-                        📖 Panduan Lengkap Setup GitHub
-                    </button>
+                    <div class="mt-2 flex gap-2">
+                        <button id="showGitHubSetup" class="text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded">
+                            📖 Panduan Lengkap Setup
+                        </button>
+                        <a href="https://github.com/settings/tokens/new?scopes=repo&description=Rumah%20Sahabat%20Quran%20App" target="_blank" class="text-xs bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded">
+                            🔑 Generate Token Baru
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -293,12 +240,10 @@
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6">
                     <h2 class="text-2xl font-bold text-gray-800 mb-4 md:mb-0">🎯 Dashboard Guru</h2>
                     <div class="flex gap-2">
-                        <button id="clearAllDataBtn"
-                            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                        <button id="clearAllDataBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
                             🗑️ Hapus Semua Data
                         </button>
-                        <button id="logoutBtn"
-                            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                        <button id="logoutBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
                             🚪 Logout
                         </button>
                     </div>
@@ -310,21 +255,15 @@
                     <form id="addRecordForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
-                            <input type="date" id="newDate"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                                required>
+                            <input type="date" id="newDate" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" required>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Nama Santri</label>
-                            <input type="text" id="newName"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                                placeholder="Nama lengkap" required>
+                            <input type="text" id="newName" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Nama lengkap" required>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin</label>
-                            <select id="newGender"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                                required>
+                            <select id="newGender" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" required>
                                 <option value="">Pilih...</option>
                                 <option value="Laki-laki">Laki-laki</option>
                                 <option value="Perempuan">Perempuan</option>
@@ -332,9 +271,7 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Kehadiran</label>
-                            <select id="newAttendance"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                                required>
+                            <select id="newAttendance" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" required>
                                 <option value="">Pilih...</option>
                                 <option value="Hadir">Hadir</option>
                                 <option value="Izin">Izin</option>
@@ -344,13 +281,10 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Capaian Tahfizh</label>
-                            <input type="text" id="newAchievement"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                                placeholder="Contoh: Al-Fatihah 1-7" required>
+                            <input type="text" id="newAchievement" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Contoh: Al-Fatihah 1-7" required>
                         </div>
                         <div class="md:col-span-2 lg:col-span-5">
-                            <button type="submit"
-                                class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200">
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200">
                                 ✅ Simpan Data
                             </button>
                         </div>
@@ -362,18 +296,12 @@
                     <table class="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">
-                                    Tanggal</th>
-                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">Nama
-                                    Santri</th>
-                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">Jenis
-                                    Kelamin</th>
-                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">
-                                    Kehadiran</th>
-                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">
-                                    Capaian Tahfizh</th>
-                                <th class="border border-gray-200 px-4 py-3 text-center font-semibold text-gray-800">
-                                    Aksi</th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">Tanggal</th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">Nama Santri</th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">Jenis Kelamin</th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">Kehadiran</th>
+                                <th class="border border-gray-200 px-4 py-3 text-left font-semibold text-gray-800">Capaian Tahfizh</th>
+                                <th class="border border-gray-200 px-4 py-3 text-center font-semibold text-gray-800">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="dashboardTableBody">
@@ -393,30 +321,22 @@
                 <input type="hidden" id="editIndex">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
-                    <input type="date" id="editDate"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                        required>
+                    <input type="date" id="editDate" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" required>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Nama Santri</label>
-                    <input type="text" id="editName"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                        required>
+                    <input type="text" id="editName" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" required>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin</label>
-                    <select id="editGender"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                        required>
+                    <select id="editGender" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" required>
                         <option value="Laki-laki">Laki-laki</option>
                         <option value="Perempuan">Perempuan</option>
                     </select>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Kehadiran</label>
-                    <select id="editAttendance"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                        required>
+                    <select id="editAttendance" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" required>
                         <option value="Hadir">Hadir</option>
                         <option value="Izin">Izin</option>
                         <option value="Sakit">Sakit</option>
@@ -425,17 +345,13 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Capaian Tahfizh</label>
-                    <input type="text" id="editAchievement"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                        required>
+                    <input type="text" id="editAchievement" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" required>
                 </div>
                 <div class="flex gap-3 pt-4">
-                    <button type="submit"
-                        class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                    <button type="submit" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
                         💾 Simpan
                     </button>
-                    <button type="button" id="cancelEdit"
-                        class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                    <button type="button" id="cancelEdit" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg font-medium transition-colors">
                         ❌ Batal
                     </button>
                 </div>
@@ -450,19 +366,16 @@
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Pilih File JSON</label>
-                    <input type="file" id="importFile" accept=".json"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                    <input type="file" id="importFile" accept=".json" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                 </div>
                 <div class="text-sm text-gray-600">
                     <p>⚠️ <strong>Perhatian:</strong> Import akan mengganti semua data yang ada!</p>
                 </div>
                 <div class="flex gap-3 pt-4">
-                    <button id="confirmImport"
-                        class="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                    <button id="confirmImport" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
                         📤 Import
                     </button>
-                    <button id="cancelImport"
-                        class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                    <button id="cancelImport" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg font-medium transition-colors">
                         ❌ Batal
                     </button>
                 </div>
@@ -471,22 +384,19 @@
     </div>
 
     <!-- GitHub Setup Modal -->
-    <div id="githubSetupModal"
-        class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div id="githubSetupModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-bold text-gray-800">☁️ Panduan Setup GitHub Storage</h3>
                 <button id="closeGitHubSetup" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
             </div>
-
+            
             <div class="space-y-6">
                 <!-- Step 1 -->
                 <div class="border-l-4 border-blue-500 pl-4">
                     <h4 class="font-semibold text-blue-800 mb-2">1️⃣ Buat Repository GitHub</h4>
-                    <p class="text-gray-700 mb-2">• Buka <a href="https://github.com/new" target="_blank"
-                            class="text-blue-600 underline">GitHub.com/new</a></p>
-                    <p class="text-gray-700 mb-2">• Nama repository: <code
-                            class="bg-gray-100 px-1 rounded">rumah-sahabat-quran-data</code></p>
+                    <p class="text-gray-700 mb-2">• Buka <a href="https://github.com/new" target="_blank" class="text-blue-600 underline">GitHub.com/new</a></p>
+                    <p class="text-gray-700 mb-2">• Nama repository: <code class="bg-gray-100 px-1 rounded">rumah-sahabat-quran-data</code></p>
                     <p class="text-gray-700 mb-2">• Pilih <strong>Public</strong> atau <strong>Private</strong></p>
                     <p class="text-gray-700">• Klik <strong>Create repository</strong></p>
                 </div>
@@ -494,14 +404,10 @@
                 <!-- Step 2 -->
                 <div class="border-l-4 border-green-500 pl-4">
                     <h4 class="font-semibold text-green-800 mb-2">2️⃣ Generate Personal Access Token</h4>
-                    <p class="text-gray-700 mb-2">• Buka <a href="https://github.com/settings/tokens" target="_blank"
-                            class="text-blue-600 underline">GitHub Settings → Developer settings → Personal access
-                            tokens</a></p>
+                    <p class="text-gray-700 mb-2">• Buka <a href="https://github.com/settings/tokens" target="_blank" class="text-blue-600 underline">GitHub Settings → Developer settings → Personal access tokens</a></p>
                     <p class="text-gray-700 mb-2">• Klik <strong>Generate new token (classic)</strong></p>
-                    <p class="text-gray-700 mb-2">• Nama: <code
-                            class="bg-gray-100 px-1 rounded">Rumah Sahabat Quran App</code></p>
-                    <p class="text-gray-700 mb-2">• Pilih scope: <strong>repo</strong> (Full control of private
-                        repositories)</p>
+                    <p class="text-gray-700 mb-2">• Nama: <code class="bg-gray-100 px-1 rounded">Rumah Sahabat Quran App</code></p>
+                    <p class="text-gray-700 mb-2">• Pilih scope: <strong>repo</strong> (Full control of private repositories)</p>
                     <p class="text-gray-700">• <strong>Copy token</strong> yang dihasilkan (simpan baik-baik!)</p>
                 </div>
 
@@ -510,7 +416,7 @@
                     <h4 class="font-semibold text-purple-800 mb-2">3️⃣ Konfigurasi Aplikasi</h4>
                     <p class="text-gray-700 mb-2">Edit bagian konfigurasi di kode aplikasi:</p>
                     <div class="bg-gray-900 text-green-400 p-4 rounded text-xs overflow-x-auto">
-                        <pre>const GITHUB_CONFIG = {
+<pre>const GITHUB_CONFIG = {
     owner: 'username_github_anda',           // Ganti dengan username GitHub
     repo: 'rumah-sahabat-quran-data',       // Nama repository yang dibuat
     token: 'ghp_xxxxxxxxxxxxxxxxxxxx',      // Token yang di-generate
@@ -527,8 +433,7 @@
                     <p class="text-gray-700 mb-2">• Buka Settings repository → Pages</p>
                     <p class="text-gray-700 mb-2">• Source: <strong>Deploy from a branch</strong></p>
                     <p class="text-gray-700 mb-2">• Branch: <strong>main</strong>, Folder: <strong>/ (root)</strong></p>
-                    <p class="text-gray-700">• Akses via: <code
-                            class="bg-gray-100 px-1 rounded">https://username.github.io/repo-name</code></p>
+                    <p class="text-gray-700">• Akses via: <code class="bg-gray-100 px-1 rounded">https://username.github.io/repo-name</code></p>
                 </div>
 
                 <!-- Step 5 -->
@@ -581,10 +486,10 @@
             owner: 'rajonankayo',                // Username GitHub Anda
             repo: 'rumah-sahabat-quran-data',   // Nama repository untuk data
             token: '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',  // Personal Access Token GitHub
-            dataFile: 'data/santri-data.json',  // Path file data di repository
+            dataFile: 'santri-data.json',       // Path file data di repository (tanpa folder)
             branch: 'main'                       // Branch yang digunakan
         };
-
+        
         // Login credentials
         const LOGIN_CREDENTIALS = {
             username: 'guru',
@@ -659,9 +564,16 @@
                 return false;
             }
 
+            // Validasi konfigurasi GitHub
+            if (!GITHUB_CONFIG.token || GITHUB_CONFIG.token === 'YOUR_GITHUB_TOKEN' || GITHUB_CONFIG.token.length < 20) {
+                localStorage.setItem('backup_data', JSON.stringify(currentData));
+                showMessage('🔧 Token GitHub tidak valid. Setup GitHub diperlukan. Data disimpan lokal.', 'warning');
+                return false;
+            }
+
             try {
                 showMessage('☁️ Menyimpan ke GitHub...', 'info');
-
+                
                 const dataToSave = {
                     metadata: {
                         lastUpdated: new Date().toISOString(),
@@ -670,6 +582,24 @@
                     },
                     data: currentData
                 };
+
+                // Test koneksi GitHub terlebih dahulu
+                const testResponse = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}`, {
+                    headers: {
+                        'Authorization': `token ${GITHUB_CONFIG.token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+
+                if (!testResponse.ok) {
+                    if (testResponse.status === 401) {
+                        throw new Error('Token GitHub tidak valid atau expired. Silakan generate token baru.');
+                    } else if (testResponse.status === 404) {
+                        throw new Error(`Repository '${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}' tidak ditemukan. Pastikan repository sudah dibuat.`);
+                    } else {
+                        throw new Error(`GitHub API Error: ${testResponse.status} ${testResponse.statusText}`);
+                    }
+                }
 
                 // Get current file SHA (required for updates)
                 let fileSha = null;
@@ -680,7 +610,7 @@
                             'Accept': 'application/vnd.github.v3+json'
                         }
                     });
-
+                    
                     if (getResponse.ok) {
                         const fileData = await getResponse.json();
                         fileSha = fileData.sha;
@@ -691,7 +621,7 @@
 
                 // Save to GitHub
                 const content = btoa(unescape(encodeURIComponent(JSON.stringify(dataToSave, null, 2))));
-
+                
                 const savePayload = {
                     message: `Update data santri - ${new Date().toLocaleString('id-ID')}`,
                     content: content,
@@ -733,9 +663,14 @@
         }
 
         async function loadDataFromGitHub() {
+            // Validasi konfigurasi GitHub
+            if (!GITHUB_CONFIG.token || GITHUB_CONFIG.token === 'YOUR_GITHUB_TOKEN' || GITHUB_CONFIG.token.length < 20) {
+                throw new Error('Token GitHub tidak valid. Setup GitHub diperlukan.');
+            }
+
             try {
                 showMessage('☁️ Memuat data dari GitHub...', 'info');
-
+                
                 const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.dataFile}`, {
                     headers: {
                         'Authorization': `token ${GITHUB_CONFIG.token}`,
@@ -747,19 +682,21 @@
                     const fileData = await response.json();
                     const content = decodeURIComponent(escape(atob(fileData.content)));
                     const parsedData = JSON.parse(content);
-
+                    
                     if (parsedData.data && Array.isArray(parsedData.data)) {
                         currentData = parsedData.data.map(record => ({
                             ...record,
                             id: record.id || generateId()
                         }));
-
+                        
                         lastSyncTime = parsedData.metadata?.lastUpdated || new Date().toISOString();
                         localStorage.setItem('last_sync', lastSyncTime);
                         updateStorageInfo();
                         showMessage('✅ Data berhasil dimuat dari GitHub!', 'success');
                         return true;
                     }
+                } else if (response.status === 401) {
+                    throw new Error('Token GitHub tidak valid atau expired. Silakan generate token baru.');
                 } else if (response.status === 404) {
                     // File tidak ada, buat dengan data sample
                     console.log('File data tidak ditemukan, membuat data baru');
@@ -767,12 +704,12 @@
                     await saveDataToGitHub();
                     return true;
                 } else {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    throw new Error(`GitHub API Error ${response.status}: ${response.statusText}`);
                 }
 
             } catch (error) {
                 console.error('Error loading from GitHub:', error);
-
+                
                 // Fallback ke localStorage backup
                 const backupData = localStorage.getItem('backup_data');
                 if (backupData) {
@@ -782,7 +719,7 @@
                     currentData = [...initialSampleData];
                     showMessage('🔧 Menggunakan data sample', 'info');
                 }
-
+                
                 updateStorageInfo();
                 return false;
             }
@@ -790,17 +727,17 @@
 
         function updateStorageInfo() {
             document.getElementById('totalRecords').textContent = currentData.length;
-
+            
             const syncTime = localStorage.getItem('last_sync') || lastSyncTime;
-            document.getElementById('lastUpdated').textContent = syncTime ?
+            document.getElementById('lastUpdated').textContent = syncTime ? 
                 new Date(syncTime).toLocaleString('id-ID') : 'Belum pernah sync';
-
+            
             // Update connection status
             const statusElement = document.getElementById('connectionStatus');
             if (statusElement) {
                 const dot = statusElement.querySelector('span:first-child');
                 const text = statusElement.querySelector('span:last-child');
-
+                
                 if (isOnline && GITHUB_CONFIG.token !== 'YOUR_GITHUB_TOKEN') {
                     dot.className = 'w-3 h-3 bg-green-500 rounded-full';
                     text.textContent = '☁️ Terhubung ke GitHub - Multi-device sync';
@@ -828,15 +765,15 @@
                     },
                     data: currentData
                 };
-
+                
                 const dataStr = JSON.stringify(exportData, null, 2);
                 const dataBlob = new Blob([dataStr], { type: 'application/json' });
-
+                
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(dataBlob);
                 link.download = `data-santri-${new Date().toISOString().split('T')[0]}.json`;
                 link.click();
-
+                
                 showMessage('✅ Data berhasil di-export!', 'success');
             } catch (error) {
                 console.error('Export error:', error);
@@ -846,10 +783,10 @@
 
         function importDataFromJSON(file) {
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = function(e) {
                 try {
                     const importedData = JSON.parse(e.target.result);
-
+                    
                     // Validate structure
                     let dataToImport = [];
                     if (importedData.data && Array.isArray(importedData.data)) {
@@ -859,7 +796,7 @@
                     } else {
                         throw new Error('Format file tidak valid');
                     }
-
+                    
                     // Validate each record
                     const validatedData = dataToImport.map(record => ({
                         id: record.id || generateId(),
@@ -870,20 +807,20 @@
                         achievement: record.achievement || '',
                         timestamp: record.timestamp || new Date().toISOString()
                     }));
-
+                    
                     // Replace current data
                     currentData = validatedData;
                     saveDataToStorage();
-
+                    
                     // Refresh displays
                     loadPublicData();
                     if (isLoggedIn) {
                         loadDashboardData();
                     }
-
+                    
                     importModal.classList.add('hidden');
                     showMessage(`✅ Berhasil import ${validatedData.length} data!`, 'success');
-
+                    
                 } catch (error) {
                     console.error('Import error:', error);
                     showMessage('Gagal import data: ' + error.message, 'error');
@@ -896,7 +833,7 @@
         function showPage(page) {
             document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active', 'border-white'));
-
+            
             if (page === 'public') {
                 publicPage.classList.remove('hidden');
                 publicBtn.classList.add('active', 'border-white');
@@ -915,12 +852,12 @@
         function calculateStatistics() {
             const today = new Date().toISOString().split('T')[0];
             const todayData = currentData.filter(record => record.date === today);
-
+            
             const uniqueSantri = [...new Set(currentData.map(record => record.name))];
             const hadirToday = todayData.filter(record => record.attendance === 'Hadir').length;
             const izinToday = todayData.filter(record => ['Izin', 'Sakit'].includes(record.attendance)).length;
             const alphaToday = todayData.filter(record => record.attendance === 'Alpha').length;
-
+            
             document.getElementById('totalSantri').textContent = uniqueSantri.length;
             document.getElementById('hadirToday').textContent = hadirToday;
             document.getElementById('izinToday').textContent = izinToday;
@@ -933,18 +870,18 @@
             const dateTo = document.getElementById('filterDateTo').value;
             const nameFilter = document.getElementById('filterName').value.toLowerCase();
             const attendanceFilter = document.getElementById('filterAttendance').value;
-
+            
             filteredData = currentData.filter(record => {
                 let match = true;
-
+                
                 if (dateFrom && record.date < dateFrom) match = false;
                 if (dateTo && record.date > dateTo) match = false;
                 if (nameFilter && !record.name.toLowerCase().includes(nameFilter)) match = false;
                 if (attendanceFilter && record.attendance !== attendanceFilter) match = false;
-
+                
                 return match;
             });
-
+            
             displayTableData(filteredData);
             showMessage(`Filter diterapkan: ${filteredData.length} dari ${currentData.length} data`, 'info');
         }
@@ -954,7 +891,7 @@
             document.getElementById('filterDateTo').value = '';
             document.getElementById('filterName').value = '';
             document.getElementById('filterAttendance').value = '';
-
+            
             filteredData = [...currentData];
             displayTableData(filteredData);
             showMessage('Filter dihapus', 'info');
@@ -968,29 +905,29 @@
                 currentSort.field = field;
                 currentSort.direction = 'asc';
             }
-
+            
             const dataToSort = filteredData.length > 0 ? filteredData : currentData;
             const sortedData = [...dataToSort].sort((a, b) => {
                 let aVal = a[field];
                 let bVal = b[field];
-
+                
                 if (field === 'date') {
                     aVal = new Date(aVal);
                     bVal = new Date(bVal);
                 }
-
+                
                 if (aVal < bVal) return currentSort.direction === 'asc' ? -1 : 1;
                 if (aVal > bVal) return currentSort.direction === 'asc' ? 1 : -1;
                 return 0;
             });
-
+            
             // Update sort indicators
             document.querySelectorAll('[id^="sort"]').forEach(el => el.textContent = '↕️');
             const sortIndicator = document.getElementById(`sort${field.charAt(0).toUpperCase() + field.slice(1)}`);
             if (sortIndicator) {
                 sortIndicator.textContent = currentSort.direction === 'asc' ? '↑' : '↓';
             }
-
+            
             displayTableData(sortedData);
         }
 
@@ -999,16 +936,16 @@
             const tableBody = document.getElementById('dataTableBody');
             const tableContainer = document.getElementById('tableContainer');
             const noDataState = document.getElementById('noDataState');
-
+            
             if (data.length === 0) {
                 tableContainer.classList.add('hidden');
                 noDataState.classList.remove('hidden');
                 return;
             }
-
+            
             tableContainer.classList.remove('hidden');
             noDataState.classList.add('hidden');
-
+            
             tableBody.innerHTML = data.map(record => `
                 <tr class="hover:bg-gray-50 transition-colors">
                     <td class="border border-gray-200 px-4 py-3">${formatDate(record.date)}</td>
@@ -1036,7 +973,7 @@
         function loadDashboardData() {
             const tableBody = document.getElementById('dashboardTableBody');
             const sortedData = [...currentData].sort((a, b) => new Date(b.date) - new Date(a.date));
-
+            
             tableBody.innerHTML = sortedData.map((record, index) => `
                 <tr class="hover:bg-gray-50 transition-colors">
                     <td class="border border-gray-200 px-4 py-3">${formatDate(record.date)}</td>
@@ -1084,17 +1021,17 @@
         function showMessage(message, type = 'success') {
             const messageContainer = document.getElementById('messageContainer');
             const messageDiv = document.createElement('div');
-
+            
             let bgColor = 'bg-green-500';
             if (type === 'error') bgColor = 'bg-red-500';
             if (type === 'info') bgColor = 'bg-blue-500';
             if (type === 'warning') bgColor = 'bg-yellow-500';
-
+            
             messageDiv.className = `p-4 rounded-lg shadow-lg mb-4 ${bgColor} text-white slide-in`;
             messageDiv.textContent = message;
-
+            
             messageContainer.appendChild(messageDiv);
-
+            
             setTimeout(() => {
                 messageDiv.remove();
             }, 4000);
@@ -1107,9 +1044,9 @@
                 ...recordData,
                 timestamp: new Date().toISOString()
             };
-
+            
             currentData.push(newRecord);
-
+            
             const success = await saveDataToGitHub();
             if (success || !isOnline) {
                 showMessage('✅ Data berhasil ditambahkan!');
@@ -1121,27 +1058,27 @@
         function editRecord(recordId) {
             const record = currentData.find(r => r.id === recordId);
             if (!record) return;
-
+            
             document.getElementById('editIndex').value = recordId;
             document.getElementById('editDate').value = record.date;
             document.getElementById('editName').value = record.name;
             document.getElementById('editGender').value = record.gender;
             document.getElementById('editAttendance').value = record.attendance;
             document.getElementById('editAchievement').value = record.achievement;
-
+            
             editModal.classList.remove('hidden');
         }
 
         async function updateRecord(recordId, recordData) {
             const index = currentData.findIndex(r => r.id === recordId);
             if (index === -1) return;
-
+            
             currentData[index] = {
                 ...currentData[index],
                 ...recordData,
                 timestamp: new Date().toISOString()
             };
-
+            
             const success = await saveDataToGitHub();
             if (success || !isOnline) {
                 showMessage('✅ Data berhasil diperbarui!');
@@ -1155,9 +1092,9 @@
             if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
                 const index = currentData.findIndex(r => r.id === recordId);
                 if (index === -1) return;
-
+                
                 currentData.splice(index, 1);
-
+                
                 const success = await saveDataToGitHub();
                 if (success || !isOnline) {
                     showMessage('✅ Data berhasil dihapus!');
@@ -1204,7 +1141,7 @@
         function handleOnlineStatus() {
             isOnline = navigator.onLine;
             updateStorageInfo();
-
+            
             if (isOnline) {
                 showMessage('🌐 Kembali online! Sinkronisasi otomatis...', 'info');
                 syncWithGitHub();
@@ -1290,7 +1227,7 @@
                 attendance: document.getElementById('newAttendance').value,
                 achievement: document.getElementById('newAchievement').value
             };
-
+            
             addRecord(recordData);
             addRecordForm.reset();
             // Set today's date again
@@ -1307,7 +1244,7 @@
                 attendance: document.getElementById('editAttendance').value,
                 achievement: document.getElementById('editAchievement').value
             };
-
+            
             updateRecord(recordId, recordData);
         });
 
@@ -1351,7 +1288,7 @@
         document.addEventListener('DOMContentLoaded', async () => {
             // Check network status
             isOnline = navigator.onLine;
-
+            
             // Load data from GitHub or fallback to local
             if (isOnline && GITHUB_CONFIG.token !== 'YOUR_GITHUB_TOKEN') {
                 await loadDataFromGitHub();
@@ -1366,13 +1303,13 @@
                     showMessage('🔧 Menggunakan data sample - Setup GitHub untuk sync multi-device', 'info');
                 }
             }
-
+            
             showPage('public');
             updateStorageInfo();
-
+            
             // Set today's date as default
             document.getElementById('newDate').value = new Date().toISOString().split('T')[0];
-
+            
             // Show appropriate welcome message
             if (GITHUB_CONFIG.token === 'YOUR_GITHUB_TOKEN') {
                 showMessage('🔧 Setup GitHub untuk sync multi-device!', 'info');
@@ -1383,7 +1320,5 @@
             }
         });
     </script>
-    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9717061575d0ef71',t:'MTc1NTU3ODk2MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
-</body>
-
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'971712b1658f81f6',t:'MTc1NTU3OTQ3Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
