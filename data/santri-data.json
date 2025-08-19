@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "lastUpdated": "2025-08-19T04:44:10.129Z",
+    "totalRecords": 3,
+    "version": "1.0"
+  },
+  "data": [
+    {
+      "id": "mei277ah5ve8i5lvt36",
+      "date": "2024-01-15",
+      "name": "Ahmad Fauzi",
+      "gender": "Laki-laki",
+      "attendance": "Hadir",
+      "achievement": "Al-Fatihah 1-7",
+      "timestamp": "2025-08-19T04:44:09.257Z"
+    },
+    {
+      "id": "mei277ah9boof2sau9s",
+      "date": "2024-01-15",
+      "name": "Siti Aisyah",
+      "gender": "Perempuan",
+      "attendance": "Hadir",
+      "achievement": "Al-Baqarah 1-10",
+      "timestamp": "2025-08-19T04:44:09.257Z"
+    },
+    {
+      "id": "mei277ahci3ik6n6l97",
+      "date": "2024-01-16",
+      "name": "Muhammad Rizki",
+      "gender": "Laki-laki",
+      "attendance": "Izin",
+      "achievement": "Al-Fatihah 1-7",
+      "timestamp": "2025-08-19T04:44:09.257Z"
+    }
+  ]
+}
